@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home Page</title>
+    <style>
+        body {
+            background-color: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            font-size: 36px;
+        }
+
+        a {
+            font-size: 24px;
+            margin: 20px;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Welcome to the Home page</h1>
+    <h1>Welcome, {{ request.user.username }}</h1>
+    {% if request.user.is_superuser %}
+        <a href="{% url 'home' %}">Task</a>
+        <a href="{% url 'user_home' %}">User</a>
+    {% elif request.GET.source == "users" %}
+        <a href="{% url 'user_home' %}">user</a>
+    {% else %}
+        <a href="{% url 'home' %}?source=users">Task</a>
+    {% endif %}
+        <a href="{% url 'login_view' %}" class="btn btn-danger">Logout</a>
+</body>
+</html>

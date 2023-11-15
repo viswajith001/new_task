@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            font-size: 24px;
+            text-align: center;
+        }
+
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            margin: 20px auto;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        a {
+            text-decoration: none;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: #fff;
+            display: inline-block;
+            margin: 10px auto;
+            text-align: center;
+        }
+
+        a:hover {
+            background-color: #2980b9;
+        }
+
+        /* Additional styles for the search bar */
+        .search-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            width: 60%; /* Adjust width as needed */
+            padding: 10px;
+            margin: 5px 0;
+            box-sizing: border-box;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            font-size: 18px; /* Adjust font size as needed */
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 18px; /* Adjust font size as needed */
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>Task List</h1>
+    <span class="username">{{ request.user.username }}</span>
+    <div class="search-container">
+        <form action="{% url 'home' %}" method="get">
+            <input type="text" placeholder="Search tasks..." name="q">
+            <input type="submit" value="Search">
+        </form>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Sl. No.</th>
+                <th>User Name</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th colspan="2">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for task in tasks %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ task.user}}</td>
+                <td>{{ task.title }}</td>
+                <td>{{ task.description }}</td>
+                <td>{{ task.date }}</td>
+                <td>{{ task.status }}</td>
+                <td><a href="{% url 'task_edit' task.id %}">Edit</a></td>
+                <td><a href="{% url 'task_delete' task.id %}">Delete</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div style="text-align: center;">
+        <a href="{% url 'form_view' %}" style="font-size: 20px;">Add Task</a>
+        <a href="{% url 'home_view' %}">Home</a>
+    </div>
+</body>
+</html>

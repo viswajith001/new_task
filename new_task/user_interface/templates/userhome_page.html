@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 80%;
+            margin: 0 auto;
+            background-color: #fff;
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #007BFF;
+            color: #fff;
+        }
+
+        button {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        a {
+            text-decoration: none;
+            display: block;
+            text-align: center;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Add User</h1>-
+    <div class="search-container">
+        <form action="{% url 'user_home' %}" method="get">
+            <input type="text" placeholder="Search users..." name="q">
+            <input type="submit" value="Search">
+        </form>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Sl. No.</th>
+                <th>Name</th>
+                <th>Phone Number</th>
+                <th>Email</th>
+                <th>DOB</th>
+                <th>Gender</th>
+                <th>Address</th>
+                <th>Photo</th>
+                <th>Status</th>
+                <th colspan=2>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ user.firstname }}{{ user.lastname }}</td>
+                <td>{{ user.phonenumber }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.dob }}</td>
+                <td>{{ user.gender }}</td>
+                <td>{{ user.address }}</td>
+                <td>{{ user.photo }}</td>
+                <td>{{ user.status }}</td>
+                <td><a href="{% url 'user_edit' user.id %}">Edit</a></td>
+                <td><a href="{% url 'user_delete' user.id %}">Delete</a></td>
+                <td><a href="{% url 'change_password' %}">Change Password</a></td>
+
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    <br>
+    <a href="{% url 'userform_view' %}"><button>Add User</button></a>
+    {% if user.is_authenticated %}
+    <a href="{% url 'login_view' %}"><button>Logout</button></a>
+    {% endif %}
+
+</body>
+</html>
